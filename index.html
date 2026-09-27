@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#162b24">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Aniimo Atlas">
+  <title>Aniimo Atlas — Unofficial Fan Atlas</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">✦</span><span>Aniimo <b>Atlas</b></span></div>
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">☼</button>
+  </header>
+
+  <main id="app">
+    <section class="hero screen active" id="home">
+      <div class="hero-copy">
+        <span class="eyebrow">YOUR FIELD GUIDE TO IDYLL</span>
+        <h1>Adventure,<br><em>organized.</em></h1>
+        <p>Track your Aniimo, shape your builds, and keep your journey close at hand.</p>
+        <div class="hero-actions">
+          <button class="primary" data-go="dex">Explore the Dex <span>→</span></button>
+          <button class="secondary" data-go="builds">Buildcrafting</button>
+        </div>
+      </div>
+      <div class="hero-orb">
+        <div class="orb-glow"></div>
+        <div class="orb"><span>✦</span></div>
+        <div class="orb-label">UNOFFICIAL<br><strong>FAN COMPANION</strong></div>
+      </div>
+
+      <div class="quick-grid">
+        <button class="feature-card" data-go="collection"><span class="feature-icon">◈</span><b>Collection</b><small>0 / 3 tracked</small></button>
+        <button class="feature-card" data-go="dex"><span class="feature-icon">⌕</span><b>Aniimo Dex</b><small>Verified field data, added over time</small></button>
+        <button class="feature-card" data-go="builds"><span class="feature-icon">⚔</span><b>Buildcraft</b><small>Plan your next team</small></button>
+      </div>
+    </section>
+
+    <section class="screen" id="dex">
+      <div class="section-head"><div><span class="eyebrow">FIELD GUIDE</span><h2>Aniimo Dex</h2></div></div>
+      <div class="search-row"><input id="search" placeholder="Search Aniimo..." autocomplete="off"><select id="element"><option value="all">All elements</option><option>Fire</option><option>Water</option><option>Nature</option><option>Electric</option></select></div>
+      <div class="dex-grid" id="dexGrid"></div>
+    </section>
+
+    <section class="screen" id="collection">
+      <div class="section-head"><div><span class="eyebrow">YOUR JOURNAL</span><h2>Collection</h2></div><span class="progress-pill" id="progressPill">0 / 3</span></div>
+      <div class="progress-card"><div><div><small>COLLECTION PROGRESS</small><strong id="progressText">0%</strong></div><div class="progress-bar"><i id="progressBar"></i></div></div></div>
+      <div class="collection-grid" id="collectionGrid"></div>
+    </section>
+
+    <section class="screen" id="builds">
+      <div class="section-head"><div><span class="eyebrow">BUILD LAB</span><h2>Buildcrafting</h2></div><button class="primary compact" id="newBuild">+ New build</button></div>
+      <div class="build-intro"><span>⚒</span><div><b>Shape your Pathfinder plan.</b><small>Save ideas locally on this device. No game-client access required.</small></div></div>
+      <div id="buildList" class="build-list"></div>
+    </section>
+
+    <section class="screen" id="settings">
+      <div class="section-head"><div><span class="eyebrow">COMPANION</span><h2>Settings</h2></div></div>
+      <div class="settings-card">
+        <div class="setting-row"><div><b>Appearance</b><small>Switch between field and moonlight themes.</small></div><button class="toggle" id="themeBtn2">Toggle</button></div>
+        <div class="setting-row"><div><b>Local data</b><small>Your collection and builds are stored in this browser.</small></div><button class="danger" id="clearData">Clear</button></div>
+      </div>
+      <div class="legal-card">
+        <span class="eyebrow">IMPORTANT</span>
+        <h3>Unofficial fan-made companion</h3>
+        <p>Aniimo Atlas is an independent fan-made project. It is <strong>not affiliated with, endorsed by, sponsored by, or an official product of Pawprint Interactive Entertainment Pte. Ltd., Pawprint Studio, or the Aniimo development team.</strong></p>
+        <p>Aniimo and related intellectual property belong to their respective owners. This companion is intended for informational and organizational purposes and does not modify, automate, or interfere with the game client.</p>
+        <div class="donation-box"><div><span class="eyebrow">KEEP THE ATLAS GROWING</span><b>Enjoying Aniimo Atlas?</b><small>Optional support helps with hosting and development. Core features stay free.</small></div><a class="primary donation" href="https://ko-fi.com/" target="_blank" rel="noopener">☕ Support on Ko-fi</a></div><button class="secondary" id="termsBtn">View Terms & Conditions</button>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <button data-go="home" class="nav active"><span>⌂</span>Home</button>
+    <button data-go="dex" class="nav"><span>✦</span>Dex</button>
+    <button data-go="builds" class="nav"><span>⚔</span>Builds</button>
+    <button data-go="collection" class="nav"><span>◈</span>Collection</button>
+    <button data-go="settings" class="nav"><span>☷</span>More</button>
+  </nav>
+
+  <dialog id="buildDialog">
+    <form method="dialog" id="buildForm">
+      <div class="dialog-head"><div><span class="eyebrow">NEW PLAN</span><h3>Create a build</h3></div><button value="cancel" class="close">×</button></div>
+      <label>Build name<input id="buildName" required placeholder="e.g. Stormbreaker"></label>
+      <label>Aniimo<select id="buildAniimo"></select></label>
+      <label>Notes<textarea id="buildNotes" rows="4" placeholder="Skills, role, team idea..."></textarea></label>
+      <button class="primary" value="default">Save build</button>
+    </form>
+  </dialog>
+
+  <dialog id="termsDialog">
+    <div class="terms"><div class="dialog-head"><div><span class="eyebrow">LEGAL</span><h3>Terms & Conditions</h3></div><button class="close" id="closeTerms">×</button></div>
+      <p><strong>Unofficial fan project.</strong> Aniimo Atlas is an independently developed, unofficial fan-made companion application. It is not affiliated with, endorsed by, sponsored by, or an official product of Pawprint Interactive Entertainment Pte. Ltd., Pawprint Studio, or the Aniimo development team.</p>
+      <p>“Aniimo” and other game names, characters, artwork, logos, and related intellectual property are owned by their respective rights holders. This site does not claim ownership of those materials.</p>
+      <p>The companion is designed for informational, organizational, and planning purposes. It does not access, modify, automate, inject into, or interfere with the Aniimo game client.</p>
+      <p>Information may change as the game changes. Users should verify important game information against official sources.</p>
+      <p>By using this site, you agree to use it lawfully and not to use it to circumvent game rules, security, or fair-play systems.</p>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
